@@ -69,18 +69,20 @@ public class PersonFacade implements IPersonFacade {
     @Override
     public PersonDTO deletePerson(int id) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
-        PersonDTO p = getPerson(id);
-
-        Person pp = em.find(Person.class, id);
-
+        Person person = em.find(Person.class, id);
+        if (person == null) {
+            throw new PersonNotFoundException(String.format("person with id: {%d} not found", id));
+        }else{
         try {
             em.getTransaction().begin();
-            em.remove(pp);
+            em.remove(person);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return p;
+        
+        return new PersonDTO(person);
+        }
     }
 
     @Override

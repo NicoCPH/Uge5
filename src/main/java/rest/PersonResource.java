@@ -85,7 +85,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException {
-        PersonDTO personToDelete = FACADE.getPerson(id);
+        PersonDTO personToDelete = FACADE.deletePerson(id);
         return GSON.toJson(personToDelete);
     }
 
