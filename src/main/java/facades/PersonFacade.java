@@ -1,5 +1,6 @@
 package facades;
 
+import Exceptions.MissingInputException;
 import Exceptions.PersonNotFoundException;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -53,6 +54,9 @@ public class PersonFacade implements IPersonFacade {
 
     @Override
     public PersonDTO addPerson(String fName, String lName, int phone) {
+       if ((fName.length() == 0) ||(lName.length() == 0)) {
+           throw new MissingInputException("first name or/and last name missing");
+        }
         EntityManager em = emf.createEntityManager();
         Person person = new Person(fName, lName, phone);
 

@@ -1,5 +1,6 @@
 package rest;
 
+import Exceptions.MissingInputException;
 import Exceptions.PersonNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -63,7 +64,7 @@ public class PersonResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String addPerson(String person) {
+    public String addPerson(String person) throws MissingInputException {
         PersonDTO p = GSON.fromJson(person, PersonDTO.class);
         PersonDTO newPerson = FACADE.addPerson(p.getfName(), p.getlName(), p.getPhone());
         return GSON.toJson(newPerson);

@@ -17,14 +17,14 @@ import javax.ws.rs.ext.Provider;
 /**
  *
  * @author Nicol
-*/
-    @Provider
-public class PersonNotFoundExceptionMapper implements ExceptionMapper<PersonNotFoundException> 
+ */
+@Provider
+public class MissingInputExceptionMapper implements ExceptionMapper<MissingInputException> 
 {
     static Gson gson = new GsonBuilder().setPrettyPrinting().create();   
     @Override
-    public Response toResponse(PersonNotFoundException ex) {
-       Logger.getLogger(PersonNotFoundExceptionMapper.class.getName())
+    public Response toResponse( MissingInputException ex) {
+       Logger.getLogger( MissingInputException.class.getName())
            .log(Level.SEVERE, null, ex);
        ExceptionDTO err = new ExceptionDTO(404,ex.getMessage());
        return Response
@@ -34,5 +34,4 @@ public class PersonNotFoundExceptionMapper implements ExceptionMapper<PersonNotF
                .build();
 	}
 }
-
 
