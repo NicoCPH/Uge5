@@ -98,11 +98,11 @@ public class PersonFacade implements IPersonFacade {
         }
     }
   @Override
-    public PersonDTO editPerson(PersonDTO p) {
+    public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, p.getId());
         if (person == null) {
-            throw new IllegalArgumentException("Person with ID: " + p.getId() + " not found");
+            throw new PersonNotFoundException("Requested Person with "+ p.getId() + " does not exist");
         }
         person.setfName(p.getfName());
         person.setlName(p.getlName());
