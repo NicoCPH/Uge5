@@ -4,10 +4,13 @@ import Exceptions.MissingInputException;
 import Exceptions.PersonNotFoundException;
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import entities.Adress;
 import entities.Person;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -53,7 +56,7 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonDTO addPerson(String fName, String lName, int phone) throws MissingInputException {
+    public PersonDTO addPerson(String fName, String lName, int phone, String street,int zip, String city) throws MissingInputException {
        if ((fName.length() == 0) ||(lName.length() == 0)) {
            throw new MissingInputException("first name or/and last name missing");
         }
@@ -62,6 +65,16 @@ public class PersonFacade implements IPersonFacade {
 
         try {
             em.getTransaction().begin();
+            Query q = em.createQuery("SELECT a FROM Adress a WHERE a.street = :street AND a.zip = :zip AND a.city = :city");
+            q.setParameter("street", street);
+            q.setParameter("zip", zip);
+            q.setParameter("city", city);
+            List<Adress> adressess = q.getResultList();
+            if(adressess.size() > 0){
+                person.setAdress(adressess.get(0));
+            }else {
+                person.setAdress(new Adress(street, zip, city));
+            }
             em.persist(person);
             em.getTransaction().commit();
         } finally {
@@ -74,12 +87,14 @@ public class PersonFacade implements IPersonFacade {
     public PersonDTO deletePerson(int id) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, id);
+        Adress adress = person.getAdress();
         if (person == null) {
             throw new PersonNotFoundException(String.format("person with id: {%d} not found", id));
         }else{
         try {
             em.getTransaction().begin();
             em.remove(person);
+            em.remove(adress);
             em.getTransaction().commit();
         } finally {
             em.close();

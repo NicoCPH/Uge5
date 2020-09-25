@@ -17,7 +17,7 @@ import dto.PersonsDTO;
 public  interface IPersonFacade {
 
    
-  public PersonDTO addPerson(String fName, String lName, int phone) throws MissingInputException;  
+  public PersonDTO addPerson(String fName, String lName, int phone, String Street,int Zip, String City) throws MissingInputException;  
   public PersonDTO deletePerson(int id)throws PersonNotFoundException;  
   public PersonDTO getPerson(int id)throws PersonNotFoundException;  
   public PersonsDTO getAllPersons();  

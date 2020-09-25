@@ -3,8 +3,6 @@ package facades;
 import Exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import entities.Person;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -60,9 +58,9 @@ public class PersonFacadeTest {
     }
 
     // TODO: Delete or change this method 
-    @Test
-    public void testGetPersonByid() throws PersonNotFoundException {
-        assertEquals(r1.getId(), facade.getPerson(r1.getId()).getId());
-
-    }
+//    @Test
+//    public void testGetPersonByid() throws PersonNotFoundException {
+//        assertEquals(r1.getId(), facade.getPerson(r1.getId()).getId());
+//
+//    }
 }
