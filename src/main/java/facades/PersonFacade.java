@@ -134,7 +134,9 @@ public class PersonFacade implements IPersonFacade {
         person.setlName(p.getlName());
         person.setPhone(p.getPhone());
         person.setLastEdited(new Date());
-
+        person.getAdress().setStreet(p.getStreet());
+        person.getAdress().setZip(p.getZip());
+        person.getAdress().setCity(p.getCity());
         try {
             em.getTransaction().begin();
             em.merge(person);
