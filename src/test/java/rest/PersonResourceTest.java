@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -76,6 +75,8 @@ public class PersonResourceTest {
         }
     }
 
+    
+    
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");

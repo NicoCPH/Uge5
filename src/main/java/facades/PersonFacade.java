@@ -53,7 +53,7 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public PersonDTO addPerson(String fName, String lName, int phone) {
+    public PersonDTO addPerson(String fName, String lName, int phone) throws MissingInputException {
        if ((fName.length() == 0) ||(lName.length() == 0)) {
            throw new MissingInputException("first name or/and last name missing");
         }
