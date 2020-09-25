@@ -87,21 +87,26 @@ public class PersonFacade implements IPersonFacade {
     public PersonDTO deletePerson(int id) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, id);
-        Adress adress = person.getAdress();
-        if (person == null) {
+         if (person == null) {
             throw new PersonNotFoundException(String.format("person with id: {%d} not found", id));
         }else{
+        Adress adress = person.getAdress();
+        Query q = em.createQuery("SELECT p FROM Person p WHERE p.adress.id = :id");
+        q.setParameter("id", id);
+        
         try {
             em.getTransaction().begin();
-            em.remove(person);
-            em.remove(adress);
+            em.remove(person);    
+            if (q.getResultList().size() < 1) {    
+           em.remove(adress);
+            } 
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        
         return new PersonDTO(person);
         }
+        
     }
 
     @Override
