@@ -1,16 +1,13 @@
 package facades;
 
-import Exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import entities.Person;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -57,10 +54,5 @@ public class PersonFacadeTest {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
-//    @Test
-//    public void testGetPersonByid() throws PersonNotFoundException {
-//        assertEquals(r1.getId(), facade.getPerson(r1.getId()).getId());
-//
-//    }
+ 
 }
