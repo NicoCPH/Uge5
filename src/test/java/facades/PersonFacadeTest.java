@@ -1,5 +1,6 @@
 package facades;
 
+import Exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import entities.Person;
 import javax.persistence.EntityManager;
@@ -17,14 +18,15 @@ public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
+    private static Person r1, r2;
 
     public PersonFacadeTest() {
     }
 
     @BeforeAll
     public static void setUpClass() {
-       emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = PersonFacade.getFacadeExample(emf);
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
+        facade = PersonFacade.getFacadeExample(emf);
     }
 
     @AfterAll
@@ -37,11 +39,13 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+        r1 = new Person("julu", "jensen", 32142123);
+        r2 = new Person("julu", "jensen", 32142123);
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-          
-
+            em.persist(r1);
+            em.persist(r2);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -54,9 +58,9 @@ public class PersonFacadeTest {
     }
 
     // TODO: Delete or change this method 
-    @Test
-    public void testAFacadeMethod() {
-        //assertEquals(0, facade.getRenameMeCount(), "Expects two rows in the database");
-    }
-
+//    @Test
+//    public void testGetPersonByid() throws PersonNotFoundException {
+//        assertEquals(r1.getId(), facade.getPerson(r1.getId()).getId());
+//
+//    }
 }

@@ -1,5 +1,6 @@
 package rest;
 
+import Exceptions.MissingInputException;
 import Exceptions.PersonNotFoundException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -63,9 +64,9 @@ public class PersonResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String addPerson(String person) {
+    public String addPerson(String person) throws MissingInputException {
         PersonDTO p = GSON.fromJson(person, PersonDTO.class);
-        PersonDTO newPerson = FACADE.addPerson(p.getfName(), p.getlName(), p.getPhone());
+        PersonDTO newPerson = FACADE.addPerson(p.getfName(), p.getlName(), p.getPhone(), p.getStreet(), p.getZip(), p.getCity() );
         return GSON.toJson(newPerson);
     }
 
@@ -73,8 +74,9 @@ public class PersonResource {
     @Path("update/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String updatePerson(@PathParam("id") Long id, String person) {
+    public String updatePerson(@PathParam("id") int id, String person) throws PersonNotFoundException {
         PersonDTO personDTO = GSON.fromJson(person, PersonDTO.class);
+        personDTO.setId(id);
         PersonDTO updatePerson = FACADE.editPerson(personDTO);
         return GSON.toJson(updatePerson);
     }
@@ -84,7 +86,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException {
-        PersonDTO personToDelete = FACADE.getPerson(id);
+        PersonDTO personToDelete = FACADE.deletePerson(id);
         return GSON.toJson(personToDelete);
     }
 

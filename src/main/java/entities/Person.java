@@ -7,10 +7,12 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
@@ -37,6 +39,11 @@ public class Person implements Serializable {
     private Date created;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date lastEdited;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Adress adress;
+    
+    
     public Person() {
     }
 
@@ -47,6 +54,16 @@ public class Person implements Serializable {
         this.created = new Date();
         this.lastEdited = this.created;
     }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
+    
+  
     public Date getCreated() {
         return created;
     }
