@@ -5,7 +5,6 @@
  */
 package dto;
 
-import entities.Adress;
 import entities.Person;
 
 /**
